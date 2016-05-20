@@ -66,6 +66,19 @@ for line in input_file:
 input_file.close()
 
 
+# Table 1 of wmo_norms/data/ALLNORMS.TXT
+# Code, Region
+region_code = [
+('01', 'Africa'),
+('02', 'Asia'),
+('03', 'South America'),
+('04', 'North and Central America'),
+('05', 'South-West Pacific'),
+('06', 'Europe'),
+('07', 'Antarctica')
+]
+
+
 # Table 6 of wmo_norms/data/ALLNORMS.TXT
 # Code, Unit, Description
 clim_elem_code = [
@@ -295,6 +308,16 @@ CREATE TABLE `station_meta` (
 );
 """)
     cur.executemany("INSERT INTO `station_meta` VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", station_meta)
+
+
+    cur.execute("DROP TABLE IF EXISTS `region_code`")
+    cur.execute("""
+CREATE TABLE `region_code` (
+    `code`   TEXT PRIMARY KEY,
+    `region` TEXT NOT NULL
+);
+""")
+    cur.executemany("INSERT INTO `region_code` VALUES(?,?)", region_code)
 
 
     cur.execute("DROP TABLE IF EXISTS `clim_elem_code`")
