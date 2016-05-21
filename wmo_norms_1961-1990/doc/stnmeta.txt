@@ -1,0 +1,325 @@
+In this file, the table numbers refer to the tables as they appear
+in document NCDC9641.TXT.
+
+     A.  STATION METADATA FILE
+
+     The station metadata are archived by station sort (region
+     number, country code, WMO station number, national
+     identification number).  Some stations do not have a WMO
+     station number.  A pseudo-WMO station number was assigned to
+     these stations and generally consists of 000 in the right-
+     most three positions of the five-digit WMO station number,
+     and these stations also have a national identification
+     number either assigned by the submitting country or assigned
+     by the NCDC.  Some stations do not have a national
+     identification number.  Each station is uniquely identified
+     by its [region number-country code-WMO station number-
+     national identification number] aggregate information.
+
+     The station metadata consists of information that identifies
+     the station and includes:  WMO region number; WMO
+     international index number; location information (latitude,
+     longitude, elevation) and station name as provided by the
+     WMO Member; location information and station name as
+     published in the May 1996 WMO Publication No. 9, Vol. A-
+     Stations (for those stations with a WMO international index
+     number); country code and name; and station name as it
+     appears in the 1961-1990 WMO Global Standard Normals
+     publication (for the published stations).  The amount of
+     metadata that was provided varied greatly from Member to
+     Member.  Some Members provided complete metadata, some
+     provided limited metadata (with the NCDC identifying the
+     remaining metadata from other sources), and some provided no
+     metadata (other than WMO station number or only station
+     name).  In a few cases (less than a dozen stations), the
+     station is identified by only an international index station
+     number which could not be located in the WMO Publication No.
+     9, Vol. A-Stations.
+
+     Each station metadata record has the following record format
+     (a blank-filled field indicates the information was not
+     provided or is not available, or is not applicable for the
+     station):
+
+     POSITION WIDTH TYPE         CONTENTS
+     -------- ----- ------------ --------------------------
+     001-001    1   numeric      region number assigned by the
+                                 NCDC (see Table 1)
+     002-003    2   alpha        two-letter country identifier
+                                 code assigned by the NCDC (see
+                                 Table 2)
+     004-008    5   numeric      WMO international index station
+                                 number (if 000 appears in the
+                                 right-most three positions,
+                                 then this is a pseudo-WMO
+                                 station number assigned by the
+                                 NCDC)
+     009-016    8   alpha        national station identification
+                                 number
+     017-017    1   alpha        national station identification
+                                 code (see Table 3)
+     018-018    1   numeric      WMO international index station
+                                 number flag (see Table 4)
+     019-020    2   numeric      latitude (degrees) provided by
+                                 Member (value: 00 to 90)
+     021-022    2   numeric      latitude (minutes) provided by
+                                 Member (value: 00 to 59)
+     023-023    1   alpha        latitude (hemisphere) provided
+                                 by Member (value: N=North,
+                                 S=South)
+     024-026    3   numeric      longitude (degrees) provided by
+                                 Member (value: 000 to 180)
+     027-028    2   numeric      longitude (minutes) provided by
+                                 Member (value: 00 to 59)
+     029-029    1   alpha        longitude (hemisphere) provided
+                                 by Member (value: E=East,
+                                 W=West)
+     030-035    6   numeric      station elevation above (or
+                                 below) Mean Sea Level (meters)
+                                 provided by Member
+     036-037    2   numeric      latitude (degrees) from WMO
+                                 Publication No. 9, Vol. A-Stations 
+                                 (value: 00 to 90)
+     038-039    2   numeric      latitude (minutes) from WMO
+                                 Publication No. 9, Vol. A-Stations 
+                                 (value: 00 to 59)
+     040-040    1   alpha        latitude (hemisphere) from WMO
+                                 Publication No. 9, Vol. A-Stations 
+                                 (value: N=North, S=South)
+     041-043    3   numeric      longitude (degrees) from WMO
+                                 Publication No. 9, Vol. A-Stations 
+                                 (value: 000 to 180)
+     044-045    2   numeric      longitude (minutes) from WMO
+                                 Publication No. 9, Vol. A-Stations 
+                                 (value: 00 to 59)
+     046-046    1   alpha        longitude (hemisphere) from WMO
+                                 Publication No. 9, Vol. A-Stations 
+                                 (value: E=East, W=West)
+     047-050    4   numeric      station elevation above (or
+                                 below) Mean Sea Level (meters)
+                                 from WMO Publication No. 9,
+                                 Vol. A-Stations
+     051-056    6   numeric      barometer elevation above (or
+                                 below) Mean Sea Level (meters)
+                                 provided by Member
+     057-090   34   alpha        station name provided by Member
+     091-136   46   alpha        station name from WMO
+                                 Publication No. 9, Vol. A-Stations
+     137-158   22   alpha        station name as printed in the
+                                 corresponding 1961-1990 WMO
+                                 global standard normals
+                                 publication (for those
+                                 published stations)
+     159-208   50   alpha        name of country or territory
+     ------------------------------------------------------------
+
+
+     Table 1.  Region number codes assigned by the NCDC.
+     -----------------------------------------------------------
+      Code     Region      
+     -----------------------------------------------------------
+       1       WMO Region I: Africa
+       2       WMO Region II: Asia
+       3       WMO Region III: South America
+       4       WMO Region IV: North and Central America
+       5       WMO Region V: South-West Pacific
+       6       WMO Region VI: Europe
+       7       Antarctic Stations
+     -----------------------------------------------------------
+
+
+     Table 2.  Country identifier code assigned by the NCDC.
+     -----------------------------------------------------------
+      Code  Country or Territory Name      
+     -----------------------------------------------------------
+       AA   ARGENTINA (ANTARCTIC STATIONS)                       
+       AB   ALBANIA                                              
+       AC   CHILE (ANTARCTIC STATIONS)                           
+       AG   ARGENTINA                                            
+       AH   AFGHANISTAN, ISLAMIC STATE OF                        
+       AJ   AZERBAIJAN                                           
+       AL   ALGERIA                                              
+       AM   UNITED STATES OF AMERICA (ANTARCTIC STATIONS)        
+       AN   ANGOLA                                               
+       AP   JAPAN (ANTARCTIC STATIONS)                           
+       AR   ARMENIA                                              
+       AS   AUSTRALIA (ANTARCTIC STATIONS)                       
+       AU   AUSTRALIA                                            
+       B1   BAHRAIN                                              
+       B2   BELIZE                                               
+       B3   BENIN                                                
+       BA   BAHAMAS                                              
+       BG   GUYANA                                               
+       BH   BOSNIA AND HERZEGOVINA                               
+       BL   BELARUS                                              
+       BP   BRUNEI DARUSSALAM                                    
+       BU   BULGARIA                                             
+       BX   BELGIUM                                              
+       BZ   BRAZIL                                               
+       C1   COLOMBIA (SAN ANDRES AND PROVIDENCIA ISLANDS)        
+       CH   CHILE                                                
+       CN   CANADA                                               
+       CO   COLOMBIA                                             
+       CS   COSTA RICA
+       CU   CUBA                                                 
+       CV   CAPE VERDE                                           
+       CY   CYPRUS                                               
+       CZ   CZECH REPUBLIC                                       
+       D1   DJIBOUTI                                             
+       DL   GERMANY                                              
+       DN   DENMARK                                              
+       DO   DOMINICA                                             
+       DR   DOMINICAN REPUBLIC                                   
+       E1   ERITREA                                              
+       EJ   FIJI                                                 
+       EQ   ECUADOR                                              
+       ES   ESTONIA                                              
+       F1   FRANCE (ISLANDS IN THE INDIAN OCEAN)                 
+       FG   FRANCE (FRENCH DEPARTMENT OF GUYANA)                 
+       FI   FINLAND                                              
+       FM   MOROCCO                                              
+       FP   FRENCH POLYNESIA                                     
+       FR   FRANCE                                               
+       GA   GEORGIA                                              
+       GL   GREENLAND                                            
+       GN   GABON                                                
+       GP   FRANCE (CARIBBEAN ISLANDS, GUADELOUPE, MARTINIQUE)   
+       GR   GREECE                                               
+       GW   GUINEA                                               
+       HK   HONG KONG                                            
+       HO   HONDURAS                                             
+       HR   CROATIA                                              
+       HU   HUNGARY                                              
+       IE   IRELAND                                              
+       IL   ICELAND                                              
+       IN   INDIA                                                
+       IR   IRAN, ISLAMIC REPUBLIC OF                            
+       IS   ISRAEL                                               
+       IV   IVORY COAST                                          
+       IY   ITALY                                                
+       JP   JAPAN                                                
+       K1   KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF               
+       KM   CAMEROON                                             
+       KN   KENYA                                                
+       KO   KOREA, REPUBLIC OF                                   
+       KS   KAZAKSTAN (ASIA)                                     
+       KW   KUWAIT                                               
+       KY   KYRGYZ REPUBLIC                                      
+       KZ   KAZAKSTAN (EUROPE)                                   
+       LA   LAO PEOPLE'S DEMOCRATIC REPUBLIC                     
+       LB   LEBANON                                              
+       LU   LITHUANIA                                            
+       LV   LATVIA                                               
+       LX   LUXEMBOURG                                           
+       M1   MALI                                                 
+       MA   MAURITIUS                                            
+       MC   THE FORMER YUGOSLAV REPUBLIC OF MACEDONIA            
+       MD   MOLDOVA, REPUBLIC OF                                 
+       MG   MADAGASCAR                                           
+       ML   MALTA                                                
+       MM   MYANMAR                                              
+       MO   MONGOLIA                                             
+       MS   MALAYSIA                                             
+       MV   MALDIVES                                             
+       MW   MALAWI                                               
+       MX   MEXICO                                               
+       NA   NETHERLANDS ANTILLES AND ARUBA                       
+       NC   NEW CALEDONIA                                        
+       NG   NIGER
+       NI   NIGERIA                                              
+       NK   NICARAGUA                                            
+       NL   NETHERLANDS                                          
+       NO   NORWAY                                               
+       NZ   NEW ZEALAND                                          
+       OM   OMAN
+       OS   AUSTRIA                                              
+       PA   PORTUGAL (MADEIRA)                                   
+       PC   CHINA                                                
+       PH   PHILIPPINES                                          
+       PK   PAKISTAN                                             
+       PL   POLAND                                               
+       PO   PORTUGAL                                             
+       PR   PERU                                                 
+       PY   PARAGUAY                                             
+       QR   QATAR                                                
+       RA   RUSSIAN FEDERATION (ASIA)                            
+       RE   RUSSIAN FEDERATION (EUROPE)                          
+       RO   ROMANIA                                              
+       RW   RWANDA                                               
+       S1   SLOVAKIA                                             
+       S2   SLOVENIA                                             
+       S3   SRI LANKA                                            
+       SA   SPAIN (CANARY ISLANDS, CEUTA AND MELILLA)            
+       SC   SEYCHELLES                                           
+       SD   SAUDI ARABIA                                         
+       SG   SENEGAL                                              
+       SL   SIERRA LEONE                                         
+       SN   SWEDEN                                               
+       SO   SOLOMON ISLANDS                                      
+       SP   SPAIN                                                
+       SR   SINGAPORE                                            
+       SU   SUDAN                                                
+       SV   EL SALVADOR                                          
+       SW   SWITZERLAND                                          
+       SY   SYRIAN ARAB REPUBLIC                                 
+       TD   TRINIDAD AND TOBAGO                                  
+       TE   CHAD                                                 
+       TG   TOGO                                                 
+       TH   THAILAND                                             
+       TJ   JORDAN                                               
+       TK   TAJIKISTAN                                           
+       TN   TANZANIA, UNITED REPUBLIC OF                         
+       TS   TUNISIA                                              
+       TU   TURKEY                                               
+       TX   TURKMENISTAN                                         
+       U1   UNITED STATES OF AMERICA (PACIFIC ISLANDS)           
+       UA   SOUTH AFRICA                                         
+       UB   EGYPT                                                
+       UE   UNITED ARAB EMIRATES                                 
+       UK   UNITED KINGDOM OF GREAT BRITAIN & NORTHERN IRELAND   
+       UP   UKRAINE                                              
+       US   UNITED STATES OF AMERICA                             
+       UY   URUGUAY                                              
+       UZ   UZBEKISTAN                                           
+       VN   VENEZUELA                                            
+       YG   YUGOSLAVIA                                           
+       ZA   ZAMBIA                                               
+       ZI   ZIMBABWE                                             
+     -----------------------------------------------------------
+
+
+     Table 3.  National station identification code.
+     -----------------------------------------------------------
+      Code     Description      
+     -----------------------------------------------------------
+       0       national station number assigned by Member
+       1       for U.S.A., national station number is from the
+               Cooperative Station Network
+       2       for U.S.A., national station number is the WBAN
+               station number
+       3       national station number assigned by the NCDC for
+               internal data processing purposes
+     blank     no national station identification number
+     -----------------------------------------------------------
+
+
+     Table 4.  WMO international index station number flag
+     assigned by the NCDC.
+     -----------------------------------------------------------
+      Flag     Description      
+     -----------------------------------------------------------
+       1       WMO international index station number provided by
+               Member
+       2       WMO international index station number determined
+               by the NCDC from other sources (i.e., WMO
+               Publication No. 9, Vol. A-Stations; Monthly
+               Climatic Data for the World CLIMAT-reporting
+               station list; Federal Climate Complex master
+               station file; Global Historical Climatology
+               Network files)
+       3       WMO international index station number is a pseudo
+               number assigned by the NCDC for internal data
+               processing purposes
+     -----------------------------------------------------------
+
+

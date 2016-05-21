@@ -1,0 +1,1133 @@
+In this file, the table numbers refer to the tables as they appear
+in document NCDC9641.TXT.
+
+
+     C.  NORMALS DATA FILE
+
+     The WMO global normals data are archived by station sort
+     (region number, country code, WMO station number, national
+     identification number) then parameter (climatic element,
+     statistic, qualifier code).
+
+     Each data record consists of station identification
+     information, data period, parameter information, normals
+     data values, and quality assurance (QC) codes.
+
+     Some Members provided monthly normal values but not annual
+     normal values, some provided annual normal values but not
+     monthly normal values, and some provided both monthly and
+     annual normal values.  In some cases, the Member computed
+     the annual normal value from the monthly normal values (but
+     did not take into account rounding errors).  In other cases
+     the Member computed the annual normal value from the
+     sequential annual values over the normals period.  The
+     annual values as provided by the Member are included in the
+     normals data file.  Also included are annual values computed
+     by the NCDC from the monthly values that were provided using
+     a rigorous rounding methodology.
+
+     The WMO Secretary-General, in Circular No. M/CLC, specified
+     a list of requested parameters and desired (optional)
+     parameters, and the requested units resolution for each
+     parameter, which the WMO Members were asked to provide for
+     the 1961-1990 global standard normals project.  The
+     parameters and units resolution that were, in fact, provided
+     varied from Member to Member.  Some Members submitted their
+     data in units or to a resolution different from that
+     requested.  Where necessary, the data were converted to the
+     requested units before being added to the data base.
+
+     A three-tiered parameter coding system was developed to
+     accommodate the large variety of parameter descriptions that
+     were submitted.  The climatic element-statistic-qualifier
+     codes were assigned to the submitted parameters based on the
+     Members' description of the parameters.  In some instances,
+     the parameter description was very limited.  The parameter
+     coding system used here consists of a climatic element code,
+     a statistic code, and a qualifier code.  The climatic
+     element and statistic codes are required for each record to
+     describe the basic parameter submitted.  In some cases, a
+     qualifier code is needed to further identify certain aspects
+     of the element or statistic.  For example, qualifiers are
+     used to specify temperature and precipitation threshold
+     values (for mean number of days with), wind directions (for
+     wind frequencies), measurement depth (for mean soil
+     temperature), statistic (for number of years normals value
+     based on), etc.
+
+     The WMO distinguishes between provisional and standard
+     normals.  Normals are computed from data over a 30-year
+     period, defined by international agreement as three
+     consecutive decades.  If there is too much missing data or
+     the data are not adjusted for inhomogeneities, the computed
+     normals are considered to be provisional.  A provisional
+     normal is defined here as a normal that is based on an
+     insufficient period of record (for any of the 12 months,
+     either more than 5 years are missing, or 3 or more
+     consecutive year-month values are missing, or both). 
+     Otherwise, the normal is considered to be a standard normal. 
+     The homogeneity question is addressed separately here by the
+     specific standard/provisional normal and homogeneity
+     indicator code used (see Table 5).  In many cases, the
+     Member did not provide information on the homogeneity issue. 
+     The user is referred to the standard/provisional normal and
+     homogeneity indicator code and any narrative metadata
+     provided by the Members for the available information that
+     addresses the homogeneity issue.
+
+     The normals data consist of decimal values, integer values
+     (for some elements, and for year and year/date values), and
+     special codes.  The special codes are defined as follows:
+
+     CODE VALUE     DEFINITION
+     ----------     ---------------------------------------------
+       -9999.9      code for missing value
+        -99999      code for missing value
+         -9999      code for missing value
+       -9797.9      code for value > 0.0 but < the smallest unit
+                    at the archived precision
+        -97979      code for value > 0 but < the smallest unit at
+                    the archived precision
+       88888.8      trace value for precipitation, rainfall,
+                    snowfall
+       8888888      trace value for precipitation, rainfall,
+                    snowfall
+            32      a value of 32 for the day of occurrence
+                    indicates no precipitation occurred in the
+                    period of record at the station (Sudan)
+            33      a value of 33 for the day of occurrence
+                    indicates the daily extreme event occurred
+                    several times
+          1999      a value of 1999 for the year of occurrence
+                    indicates the monthly extreme event occurred
+                    several times
+        199999      a value of 199999 for the year and day of
+                    occurrence indicates the daily extreme event
+                    occurred several times
+     ------------------------------------------------------------
+
+     Each normals data record has the following record format:
+  
+     POSITION WIDTH TYPE         CONTENTS
+     -------- ----- ------------ --------------------------------
+     001-001    1   numeric      region number assigned by the
+                                 NCDC (see Table 1)
+     002-003    2   alpha        two-letter country identifier
+                                 code assigned by the NCDC (see
+                                 Table 2)
+     004-008    5   numeric      WMO international index station
+                                 number (if 000 appears in the
+                                 right-most three positions,
+                                 then this is a pseudo-WMO
+                                 station number assigned by the
+                                 NCDC)
+     009-016    8   alpha        national station identification
+                                 number
+     017-017    1   alpha        national station identification
+                                 code (see Table 3)
+     018-021    4   numeric      first year of period which
+                                 normals or extremes are based
+                                 on
+     022-025    4   numeric      last year of period which
+                                 normals or extremes are based
+                                 on
+     026-026    1   numeric      standard/provisional normal and
+                                 homogeneity indicator code (see
+                                 Table 5)
+     027-028    2   alpha        climatic element code (see
+                                 Table 6)
+     029-030    2   alpha        statistic code (see Table 7)
+     031-036    6   alpha        element-statistic qualifier
+                                 code (see Table 8)
+     037-037    1   alpha        code indicating which QC tests
+                                 were performed on the values in
+                                 this record (see Section 16. 
+                                 DATA QUALITY: Quality
+                                 Statement)
+     038-044    7   numeric      normals data value for January
+                                 (real with explicit decimal
+                                 point, or integer, depending on
+                                 climatic element; see Table 6)
+     045-045    1   alpha        test failure QC code for
+                                 January (see Section 16.  DATA
+                                 QUALITY: Quality Statement)
+     046-052    7   numeric      normals data value for February
+                                 (real with explicit decimal
+                                 point, or integer, depending on
+                                 climatic element; see Table 6)
+     053-053    1   alpha        test failure QC code for
+                                 February (see Section 16.  DATA
+                                 QUALITY: Quality Statement)
+     054-060    7   numeric      normals data value for March
+                                 (real with explicit decimal
+                                 point, or integer, depending on
+                                 climatic element; see Table 6)
+     061-061    1   alpha        test failure QC code for March
+                                 (see Section 16.  DATA QUALITY:
+                                 Quality Statement)
+     062-068    7   numeric      normals data value for April
+                                 (real with explicit decimal
+                                 point, or integer, depending on
+                                 climatic element; see Table 6)
+     069-069    1   alpha        test failure QC code for April
+                                 (see Section 16.  DATA QUALITY:
+                                 Quality Statement)
+     070-076    7   numeric      normals data value for May
+                                 (real with explicit decimal
+                                 point, or integer, depending on
+                                 climatic element; see Table 6)
+     077-077    1   alpha        test failure QC code for May
+                                 (see Section 16.  DATA QUALITY:
+                                 Quality Statement)
+     078-084    7   numeric      normals data value for June
+                                 (real with explicit decimal
+                                 point, or integer, depending on
+                                 climatic element; see Table 6)
+     085-085    1   alpha        test failure QC code for June
+                                 (see Section 16.  DATA QUALITY:
+                                 Quality Statement)
+     086-092    7   numeric      normals data value for July
+                                 (real with explicit decimal
+                                 point, or integer, depending on
+                                 climatic element; see Table 6)
+     093-093    1   alpha        test failure QC code for July
+                                 (see Section 16.  DATA QUALITY:
+                                 Quality Statement)
+     094-100    7   numeric      normals data value for August
+                                 (real with explicit decimal
+                                 point, or integer, depending on
+                                 climatic element; see Table 6)
+     101-101    1   alpha        test failure QC code for August
+                                 (see Section 16.  DATA QUALITY:
+                                 Quality Statement)
+     102-108    7   numeric      normals data value for
+                                 September (real with explicit
+                                 decimal point, or integer,
+                                 depending on climatic element;
+                                 see Table 6)
+     109-109    1   alpha        test failure QC code for
+                                 September (see Section 16. 
+                                 DATA QUALITY: Quality
+                                 Statement)
+     110-116    7   numeric      normals data value for October
+                                 (real with explicit decimal
+                                 point, or integer, depending on
+                                 climatic element; see Table 6)
+     117-117    1   alpha        test failure QC code for
+                                 October (see Section 16.  DATA
+                                 QUALITY: Quality Statement)
+     118-124    7   numeric      normals data value for November
+                                 (real with explicit decimal
+                                 point, or integer, depending on
+                                 climatic element; see Table 6)
+     125-125    1   alpha        test failure QC code for
+                                 November (see Section 16.  DATA
+                                 QUALITY: Quality Statement)
+     126-132    7   numeric      normals data value for December
+                                 (real with explicit decimal
+                                 point, or integer, depending on
+                                 climatic element; see Table 6)
+     133-133    1   alpha        test failure QC code for
+                                 December (see Section 16.  DATA
+                                 QUALITY: Quality Statement)
+     134-141    8   numeric      annual normals data value
+                                 provided by Member (real with
+                                 explicit decimal point, or
+                                 integer, depending on climatic
+                                 element; see Table 6)
+     142-142    1   alpha        test failure QC code for annual
+                                 value (see Section 16.  DATA
+                                 QUALITY: Quality Statement)
+     143-150    8   numeric      annual normals value computed
+                                 by the NCDC from the monthly
+                                 values provided (real with
+                                 explicit decimal point, or
+                                 integer, depending on climatic
+                                 element; see Table 6)
+     151-208   58   alpha        not used
+     ------------------------------------------------------------
+
+
+     Table 1.  Region number codes assigned by the NCDC.
+     -----------------------------------------------------------
+      Code     Region      
+     -----------------------------------------------------------
+       1       WMO Region I: Africa
+       2       WMO Region II: Asia
+       3       WMO Region III: South America
+       4       WMO Region IV: North and Central America
+       5       WMO Region V: South-West Pacific
+       6       WMO Region VI: Europe
+       7       Antarctic Stations
+     -----------------------------------------------------------
+
+
+     Table 2.  Country identifier code assigned by the NCDC.
+     -----------------------------------------------------------
+      Code  Country or Territory Name      
+     -----------------------------------------------------------
+       AA   ARGENTINA (ANTARCTIC STATIONS)                       
+       AB   ALBANIA                                              
+       AC   CHILE (ANTARCTIC STATIONS)                           
+       AG   ARGENTINA                                            
+       AH   AFGHANISTAN, ISLAMIC STATE OF                        
+       AJ   AZERBAIJAN                                           
+       AL   ALGERIA                                              
+       AM   UNITED STATES OF AMERICA (ANTARCTIC STATIONS)        
+       AN   ANGOLA                                               
+       AP   JAPAN (ANTARCTIC STATIONS)                           
+       AR   ARMENIA                                              
+       AS   AUSTRALIA (ANTARCTIC STATIONS)                       
+       AU   AUSTRALIA                                            
+       B1   BAHRAIN                                              
+       B2   BELIZE                                               
+       B3   BENIN                                                
+       BA   BAHAMAS                                              
+       BG   GUYANA                                               
+       BH   BOSNIA AND HERZEGOVINA                               
+       BL   BELARUS                                              
+       BP   BRUNEI DARUSSALAM                                    
+       BU   BULGARIA                                             
+       BX   BELGIUM                                              
+       BZ   BRAZIL                                               
+       C1   COLOMBIA (SAN ANDRES AND PROVIDENCIA ISLANDS)        
+       CH   CHILE                                                
+       CN   CANADA                                               
+       CO   COLOMBIA                                             
+       CS   COSTA RICA
+       CU   CUBA                                                 
+       CV   CAPE VERDE                                           
+       CY   CYPRUS                                               
+       CZ   CZECH REPUBLIC                                       
+       D1   DJIBOUTI                                             
+       DL   GERMANY                                              
+       DN   DENMARK                                              
+       DO   DOMINICA                                             
+       DR   DOMINICAN REPUBLIC                                   
+       E1   ERITREA                                              
+       EJ   FIJI                                                 
+       EQ   ECUADOR                                              
+       ES   ESTONIA                                              
+       F1   FRANCE (ISLANDS IN THE INDIAN OCEAN)                 
+       FG   FRANCE (FRENCH DEPARTMENT OF GUYANA)                 
+       FI   FINLAND                                              
+       FM   MOROCCO                                              
+       FP   FRENCH POLYNESIA                                     
+       FR   FRANCE                                               
+       GA   GEORGIA                                              
+       GL   GREENLAND                                            
+       GN   GABON                                                
+       GP   FRANCE (CARIBBEAN ISLANDS, GUADELOUPE, MARTINIQUE)   
+       GR   GREECE                                               
+       GW   GUINEA                                               
+       HK   HONG KONG                                            
+       HO   HONDURAS                                             
+       HR   CROATIA                                              
+       HU   HUNGARY                                              
+       IE   IRELAND                                              
+       IL   ICELAND                                              
+       IN   INDIA                                                
+       IR   IRAN, ISLAMIC REPUBLIC OF                            
+       IS   ISRAEL                                               
+       IV   IVORY COAST                                          
+       IY   ITALY                                                
+       JP   JAPAN                                                
+       K1   KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF               
+       KM   CAMEROON                                             
+       KN   KENYA                                                
+       KO   KOREA, REPUBLIC OF                                   
+       KS   KAZAKSTAN (ASIA)                                     
+       KW   KUWAIT                                               
+       KY   KYRGYZ REPUBLIC                                      
+       KZ   KAZAKSTAN (EUROPE)                                   
+       LA   LAO PEOPLE'S DEMOCRATIC REPUBLIC                     
+       LB   LEBANON                                              
+       LU   LITHUANIA                                            
+       LV   LATVIA                                               
+       LX   LUXEMBOURG                                           
+       M1   MALI                                                 
+       MA   MAURITIUS                                            
+       MC   THE FORMER YUGOSLAV REPUBLIC OF MACEDONIA            
+       MD   MOLDOVA, REPUBLIC OF                                 
+       MG   MADAGASCAR                                           
+       ML   MALTA                                                
+       MM   MYANMAR                                              
+       MO   MONGOLIA                                             
+       MS   MALAYSIA                                             
+       MV   MALDIVES                                             
+       MW   MALAWI                                               
+       MX   MEXICO                                               
+       NA   NETHERLANDS ANTILLES AND ARUBA                       
+       NC   NEW CALEDONIA                                        
+       NG   NIGER
+       NI   NIGERIA                                              
+       NK   NICARAGUA                                            
+       NL   NETHERLANDS                                          
+       NO   NORWAY                                               
+       NZ   NEW ZEALAND                                          
+       OM   OMAN
+       OS   AUSTRIA                                              
+       PA   PORTUGAL (MADEIRA)                                   
+       PC   CHINA                                                
+       PH   PHILIPPINES                                          
+       PK   PAKISTAN                                             
+       PL   POLAND                                               
+       PO   PORTUGAL                                             
+       PR   PERU                                                 
+       PY   PARAGUAY                                             
+       QR   QATAR                                                
+       RA   RUSSIAN FEDERATION (ASIA)                            
+       RE   RUSSIAN FEDERATION (EUROPE)                          
+       RO   ROMANIA                                              
+       RW   RWANDA                                               
+       S1   SLOVAKIA                                             
+       S2   SLOVENIA                                             
+       S3   SRI LANKA                                            
+       SA   SPAIN (CANARY ISLANDS, CEUTA AND MELILLA)            
+       SC   SEYCHELLES                                           
+       SD   SAUDI ARABIA                                         
+       SG   SENEGAL                                              
+       SL   SIERRA LEONE                                         
+       SN   SWEDEN                                               
+       SO   SOLOMON ISLANDS                                      
+       SP   SPAIN                                                
+       SR   SINGAPORE                                            
+       SU   SUDAN                                                
+       SV   EL SALVADOR                                          
+       SW   SWITZERLAND                                          
+       SY   SYRIAN ARAB REPUBLIC                                 
+       TD   TRINIDAD AND TOBAGO                                  
+       TE   CHAD                                                 
+       TG   TOGO                                                 
+       TH   THAILAND                                             
+       TJ   JORDAN                                               
+       TK   TAJIKISTAN                                           
+       TN   TANZANIA, UNITED REPUBLIC OF                         
+       TS   TUNISIA                                              
+       TU   TURKEY                                               
+       TX   TURKMENISTAN                                         
+       U1   UNITED STATES OF AMERICA (PACIFIC ISLANDS)           
+       UA   SOUTH AFRICA                                         
+       UB   EGYPT                                                
+       UE   UNITED ARAB EMIRATES                                 
+       UK   UNITED KINGDOM OF GREAT BRITAIN & NORTHERN IRELAND   
+       UP   UKRAINE                                              
+       US   UNITED STATES OF AMERICA                             
+       UY   URUGUAY                                              
+       UZ   UZBEKISTAN                                           
+       VN   VENEZUELA                                            
+       YG   YUGOSLAVIA                                           
+       ZA   ZAMBIA                                               
+       ZI   ZIMBABWE                                             
+     -----------------------------------------------------------
+
+
+     Table 3.  National station identification code.
+     -----------------------------------------------------------
+      Code     Description      
+     -----------------------------------------------------------
+       0       national station number assigned by Member
+       1       for U.S.A., national station number is from the
+               Cooperative Station Network
+       2       for U.S.A., national station number is the WBAN
+               station number
+       3       national station number assigned by the NCDC for
+               internal data processing purposes
+     blank     no national station identification number
+     -----------------------------------------------------------
+
+
+     Table 4.  WMO international index station number flag
+     assigned by the NCDC.
+     -----------------------------------------------------------
+      Flag     Description      
+     -----------------------------------------------------------
+       1       WMO international index station number provided by
+               Member
+       2       WMO international index station number determined
+               by the NCDC from other sources (i.e., WMO
+               Publication No. 9, Vol. A-Stations; Monthly
+               Climatic Data for the World CLIMAT-reporting
+               station list; Federal Climate Complex master
+               station file; Global Historical Climatology
+               Network files)
+       3       WMO international index station number is a pseudo
+               number assigned by the NCDC for internal data
+               processing purposes
+     -----------------------------------------------------------
+
+
+
+     Table 5.  Standard/provisional normal and homogeneity
+     indicator code.
+     -----------------------------------------------------------
+      Code     Description      
+     -----------------------------------------------------------
+       1       standard normal based on nonhomogeneous data whose
+               heterogeneities were adjusted
+       2       standard normal based on nonhomogeneous data whose
+               heterogeneities were not adjusted
+       3       standard normal based on data that were not
+               examined for homogeneity
+       4       standard normal based on data for which the
+               examination, heterogeneity determination, and any
+               adjustments were done using an automated process
+       5       provisional normal due to an insufficient period
+               of record
+       8       standard normal, not known if data were examined
+               for inhomogeneities
+     -----------------------------------------------------------
+
+
+     Table 6.  Climatic element codes, element units (may also
+     depend on statistic, indicated by *), and element
+     description.
+     -----------------------------------------------------------
+      Code             Units                 Description      
+     -----------------------------------------------------------
+       01              deg C                 Dry Bulb Temperature
+       02              deg C                 Maximum Dry Bulb Temperature
+       03              deg C                 Minimum Dry Bulb Temperature
+       04              deg C                 Wet Bulb Temperature
+       05              deg C                 Dew Point Temperature
+       06                 mm                 Precipitation
+       08                 mm                 Maximum 24-Hour Precipitation
+       09                 cm                 Snowfall
+       10                 cm                 Snow Depth
+       11                  %                 Relative Humidity
+       12                hPa                 Sea Level Pressure
+       13                hPa                 Station Pressure
+       14                hPa                 Vapor Pressure
+       15                  *                 Sunshine
+       16              m/sec                 Wind Speed
+       17            degrees                 Wind Direction
+       18           unitless                 Wind Steadiness
+       19              deg C                 Soil Temperature
+       20               okta                 Sky Cover (Cloud Cover)
+       21                 mm                 Pan Evaporation
+       28                  m                 Height of 1000 hPa Geopotential Level
+       29                  m                 Height of 850 hPa Geopotential Level
+       30                  m                 Height of 700 hPa Geopotential level
+       32              MJ/m2                 Net Solar Radiation
+       33              MJ/m2                 Global Solar Radiation
+       34              MJ/m2                 Diffuse Solar Radiation
+       35              MJ/m2                 Reflected Solar Radiation
+       36              MJ/m2                 Atmospheric Solar Radiation
+       37              MJ/m2                 Terrestrial Solar Radiation
+       38                 mm                 Piche Evaporation
+       39                 mm                 Rainfall
+       40                  *                 Bright Sunshine
+       48                  *                 Calm Winds
+       49              count                 Number Days with Sandstorm/Thick Dust/Haze
+       50              count                 Number Days with Measurable Bright Sunshine
+       51              count                 Number Days with Thunder
+       52              count                 Number Days with Lightning
+       53              count                 Number Days with Hail
+       54              count                 Number Days with Rainfall GE Threshold
+       55              count                 Number Days with Rain Showers
+       56              count                 Number Days with Snowfall
+       57              count                 Number Days with Snow on Ground
+       58              count                 Number Days with Fog/Ice Fog
+       59              count                 Number Days with Fog - Sky Obscured
+       60              count                 Number Days with Fog - Sky Unobscured
+       61              count                 Number Days with Haze/Smoke
+       62              count                 Number Days with Dust
+       63              count                 Number Days with Blowing Dust/Sand
+       65              count                 Number Days with Visibility LE Threshold
+       73              count                 Number Days with no Sunshine
+       74              count                 Number Days with Dew
+       75              count                 Number Days with Rime/Glaze Ice
+       76              count                 Number Days with Air Frost
+       77              count                 Number Days with Grass Frost
+       82              count                 Number Days with Gale Force Winds
+       83              count                 Number Days Maximum Temperature GE Threshold
+       84              count                 Number Days Maximum Temperature LE Threshold
+       85              count                 Number Days Minimum Temperature LE Threshold
+       86              count                 Number Days Minimum Temperature GE Threshold
+       87              count                 Number Days Mean Temperature GE Threshold
+       89              count                 Number Days with Dust/Haze/Mist
+       90              count                 Number Days Maximum Temperature GT Threshold
+       91              count                 Number Days Maximum Temperature LT Threshold
+       92              count                 Number Days Minimum Temperature GT Threshold
+       93              count                 Number Days Minimum Temperature LT Threshold
+       94              count                 Number Days with Snowfall GE Threshold
+       95              count                 Number Days with Precipitation GE Threshold
+       96              count                 Number Days with Snow Cover GE Threshold
+       97              count                 Number Days with Freezing Rain/Drizzle
+       98              count                 Number Days with Blowing Snow
+       AA              count                 Number Days with Rain/Drizzle
+       AB              count                 Number Days with Snow/Hail
+       AC              count                 Number Days with Fog/Mist
+       AD              count                 Number Days with Weather Phenomena
+       AE              count                 Number Days with Ice Storm
+       AF              count                 Number Days with Thick Haze
+       AG              count                 Number Days with Rising Sand
+       AH              count                 Number Days with Mist
+       AI              count                 Number Days with Squalls
+       AJ              count                 Number Days with Duststorm/Sandstorm
+       AK              count                 Number Days with Sleet/Snow
+       BH              count                 Number Days Mean Temperature LT Threshold
+       BJ              count                 Number Days with Fog
+       BM              count                 Number Days with Daily Maximum Wind Speed GE
+                                             Threshold
+       BT              count                 Number Days with Occurrence of Rain
+       BW              count                 Number Days with Daily Maximum Snow Cover GE
+                                             Threshold
+     -----------------------------------------------------------
+
+
+     Table 7.  Statistic codes and description.
+     -----------------------------------------------------------
+      Code Description      
+     -----------------------------------------------------------
+       01  Mean Value
+       02  Median Value
+       03  Standard Deviation of Mean Value
+       04  Maximum Value
+       05  Minimum Value
+       06  Mean Daily Value
+       08  Standard Deviation of Mean Daily Value
+       09  Mean Daily Maximum Value
+       10  Mean Daily Minimum Value
+       11  Maximum Daily Value
+       12  Date (Year/Day) of Occurrence of Maximum Daily Value
+       13  Minimum Daily Value
+       14  Date (Year/Day) of Occurrence of Minimum Daily Value
+       15  Mean Monthly Value
+       16  Standard Deviation of Mean Monthly Value
+       18  Mean Monthly Maximum Value
+       19  Mean Monthly Minimum Value
+       20  Minimum Monthly Value
+       21  Year of Occurrence of Minimum Monthly Value
+       22  First Quintile
+       23  Second Quintile
+       24  Third Quintile
+       25  Fourth Quintile
+       26  Maximum Monthly Value
+       27  Year of Occurrence of Maximum Monthly Value
+       30  Maximum Gust 
+       37  Percent of Possible
+       38  Frequency
+       41  Prevailing
+       42  Vector
+       44  Mean Number of Hours
+       45  Mean - Sunrise to Sunset
+       51  Mean on Last Day of Month
+       53  Percent of Daylight Hours
+       55  Year of Occurrence of Maximum Value
+       56  Year of Occurrence of Minimum Value
+       57  Mean Percent
+       58  First Quartile
+       59  Third Quartile
+       60  Standard Deviation of 3-Hourly Values
+       64  Total Count for Period of Record
+       69  Mean of Hourly Observations
+       70  Mean of Observations at 0000 LST
+       71  Mean of Observations at 0100 LST
+       72  Mean of Observations at 0200 LST
+       73  Mean of Observations at 0300 LST
+       74  Mean of Observations at 0400 LST
+       75  Mean of Observations at 0500 LST
+       76  Mean of Observations at 0600 LST
+       77  Mean of Observations at 0700 LST
+       78  Mean of Observations at 0800 LST
+       79  Mean of Observations at 0900 LST
+       80  Mean of Observations at 1000 LST
+       81  Mean of Observations at 1100 LST
+       82  Mean of Observations at 1200 LST
+       83  Mean of Observations at 1300 LST
+       84  Mean of Observations at 1400 LST
+       85  Mean of Observations at 1500 LST
+       86  Mean of Observations at 1600 LST
+       87  Mean of Observations at 1700 LST
+       88  Mean of Observations at 1800 LST
+       89  Mean of Observations at 1900 LST
+       90  Mean of Observations at 2000 LST
+       91  Mean of Observations at 2100 LST
+       92  Mean of Observations at 2200 LST
+       93  Mean of Observations at 2300 LST
+       94  Mean of 3-Hourly Observations
+       97  Mean of Synoptic Observations
+       98  Number of Years used to Calculate Normal
+       AF  Afternoon Average
+       AM  Daytime Average
+       MO  Morning Average
+       PM  Nighttime Average
+     -----------------------------------------------------------
+
+
+     Table 8.  Explanation of element-statistic qualifier codes. 
+     The following qualifiers were used for the indicated element
+     (Elem) and statistic (Stat) code combinations.
+     -----------------------------------------------------------
+     Elem  Stat  Qualifier
+     Code  Code  Code                Description      
+     -----------------------------------------------------------
+     (any) (any) blank               qualifier not specified
+     (any) (any) an integer number   the qualifier code is
+                                     defined in Table 7
+     (any) (any) a 2-letter code     the qualifier code is
+                                     defined in Table 7
+      15    44   NCDC                mean monthly number of
+                                     hours of sunshine computed
+                                     by the NCDC from mean daily
+                                     values provided by the
+                                     Member
+      17   (any) a decimal number    the number is the mean
+                                     direction the wind is
+                                     blowing from, in compass
+                                     degrees
+      19   (any) a decimal number    the number is depth at
+                                     which the soil temperature
+                                     was measured, in cm
+      21    15   a decimal number    the size of the
+                                     evaporimeter, in cm2
+      54   (any) a decimal number    rainfall amount threshold
+                                     value, in mm
+      65    15   a decimal number    visibility threshold value,
+                                     in km
+     83-87 (any) a decimal number    temperature threshold
+                                     value, in deg C
+     90-93 (any) a decimal number    temperature threshold
+                                     value, in deg C
+      94   (any) a decimal number    snowfall amount threshold
+                                     value, in cm
+      95   (any) a decimal number    precipitation amount
+                                     threshold value, in mm
+      96   (any) a decimal number    snow cover amount threshold
+                                     value, in cm
+      BH    15   a decimal number    temperature threshold
+                                     value, in deg C
+      BM    15   a decimal number    wind speed threshold value,
+                                     in m/sec
+      BW    15   a decimal number    snow cover amount threshold
+                                     value, in cm
+     -----------------------------------------------------------
+
+Section 16.  DATA QUALITY:  Quality Statement
+
+     Limited quality assurance (QC) procedures were applied to
+     some parameters as a check of the data entry and keying
+     process.  The QC consisted of four categories of tests:
+
+     1.        Absolute limits checks (abbreviated "Abs" in the
+               following tables).
+
+     2.        Internal consistency checks between elements and
+               statistics (abbreviated "Int" in the following
+               tables).
+
+     3.        Comparison of the 1961-1990 normals values
+               submitted as part of this project to the
+               corresponding 1971-1980 means which were part of
+               the World Weather Records (WWR) (abbreviated "Com"
+               in the following tables).
+
+     4.        Internal consistency check between the annual
+               value (where available) and the monthly values
+               (abbreviated "Year" in the following tables).  The
+               annual value was compared to the mean or sum of
+               the monthly values, as appropriate.
+
+     The first three categories of QC tests were performed on
+     both the monthly and annual values.  The fourth category of
+     tests was performed on only the annual values.  The specific
+     tests that were performed in each category varied with
+     category and depended on the elements and statistics
+     submitted by the Member.
+
+     Column 37 of the data record contains a code indicating
+     which categories of tests were performed on the values in
+     the record.  A code appears adjacent to each monthly and
+     annual value which indicates the results of these tests for
+     the value (this is the "test failure" QC code).  It should
+     be noted that the test failure QC code indicates only if the
+     data value failed a test; it does not indicate if the value
+     is in error.  It is possible for a valid normals data value
+     to fail a QC test if it is beyond the specified limits for
+     the parameter or if the procedure utilized in the
+     computation of the normals data value resulted in an
+     apparent inconsistency.  (A few examples of this include: 
+     high altitude stations may be windier than the extreme wind
+     speed limit; some stations may have 1961-1990 normals which
+     are considerably different from the 1971-1980 WWR means due
+     to the variability of the parameter from decade to decade
+     for those locations.)
+
+     The set of tests performed on the data (indicated by the
+     code in column 37) prescribes the range of possible test
+     failure QC code values that each monthly/annual value on
+     that record can have.  The column 37 code values are defined
+     in Table 16A.  The monthly/annual test failure QC code
+     values are defined in Table 16B.
+
+     Table 16A.  QC code values for column 37, indicating which
+     categories of tests were performed ("Y" indicates tests in
+     this category were performed, "-" indicates tests in this
+     category were not performed).  Also shown are the
+     corresponding allowable test failure QC codes for the
+     monthly/annual normals values.
+     -----------------------------------------------------------
+     |   Test Performed    | QC Code |Allowable Table 16B Codes|
+     |---------------------|   for   |-------------------------|
+     |Abs | Int | Com |Year|Column 37|   Monthly  |   Annual   |
+     |----|-----|-----|----|---------|------------|------------|
+     | Y  |  -  |  -  |  - |    I    |     AI     |     AI     |
+     | Y  |  Y  |  -  |  - |    M    |    AEIM    |    AEIM    |
+     | Y  |  -  |  Y  |  - |    K    |    ACIK    |    ACIK    |
+     | Y  |  -  |  -  |  Y |    J    |     AI     |    ABIJ    |
+     | Y  |  Y  |  Y  |  - |    O    |  ACEGIKMO  |  ACEGIKMO  |
+     | Y  |  Y  |  -  |  Y |    N    |    AEIM    |  ABEFIJMN  |
+     | Y  |  -  |  Y  |  Y |    L    |    ACIK    |  ABCDIJKL  |
+     | Y  |  Y  |  Y  |  Y |    P    |  ACEGIKMO  |  A thru P  |
+     | -  |  Y  |  -  |  - |    E    |     AE     |     AE     |
+     | -  |  Y  |  Y  |  - |    G    |    ACEG    |    ACEG    |
+     | -  |  Y  |  -  |  Y |    F    |     AE     |    ABEF    |
+     | -  |  Y  |  Y  |  Y |    H    |    ACEG    |  A thru H  |
+     | -  |  -  |  Y  |  - |    C    |     AC     |     AC     |
+     | -  |  -  |  -  |  Y |    B    |      A     |     AB     |
+     | -  |  -  |  Y  |  Y |    D    |     AC     |    ABCD    |
+     | -  |  -  |  -  |  - |    A    |      A     |      A     |
+     -----------------------------------------------------------
+
+     Table 16B.  Monthly and annual test failure QC codes,
+     indicating if a normals data value failed a QC check in a QC
+     category.  "F" indicates the value failed a test in the
+     specified category.  "-" indicates either the value passed
+     all relevant tests in this category, or none of the tests in
+     this category were applied to this value (the code in column
+     37 will aid the user in determining if tests in the
+     indicated category were applied).   #' indicates "does not
+     apply" (this code not used for monthly data values).
+     --------------------------------------------------
+     |     Test Failed     | QC Code for  |QC Code for|
+     |---------------------|   Monthly    |   Annual  |
+     |Abs | Int | Com |Year|    Value     |   Value   |
+     |----|-----|-----|----|--------------|-----------|
+     | F  |  -  |  -  |  - |      I       |     I     |
+     | F  |  F  |  -  |  - |      M       |     M     |
+     | F  |  -  |  F  |  - |      K       |     K     |
+     | F  |  -  |  -  |  F |      #       |     J     |
+     | F  |  F  |  F  |  - |      O       |     O     |
+     | F  |  F  |  -  |  F |      #       |     N     |
+     | F  |  -  |  F  |  F |      #       |     L     |
+     | F  |  F  |  F  |  F |      #       |     P     |
+     | -  |  F  |  -  |  - |      E       |     E     |
+     | -  |  F  |  F  |  - |      G       |     G     |
+     | -  |  F  |  -  |  F |      #       |     F     |
+     | -  |  F  |  F  |  F |      #       |     H     |
+     | -  |  -  |  F  |  - |      C       |     C     |
+     | -  |  -  |  -  |  F |      #       |     B     |
+     | -  |  -  |  F  |  F |      #       |     D     |
+     | -  |  -  |  -  |  - |      A       |     A     |
+     --------------------------------------------------
+
+     The specific tests that were applied in each category are
+     discussed in Appendix A-2: QC Tests.
+
+     Data entry and keying errors that were flagged by the QC
+     tests were corrected.  For the remaining values that were
+     flagged, the consistency of the differences or ratios among
+     the 12 months was examined in a search for systematic
+     differences.  Suspect data were examined manually and were
+     adjusted if problem resolution (for example, digits
+     transposed, missing negative sign, decimal point off, values
+     not in requested units) were possible.  In some cases the
+     contributing Member provided revised values.  After the
+     adjustments and revisions were applied, the data were again
+     subjected to the complete suite of QC tests.
+
+23.  APPENDIX:  Appendix A-2: QC Tests
+
+     This appendix describes the range of specific tests that
+     were performed in each of the four QC test categories.  The
+     specific tests that were actually performed depended on the
+     elements and statistics submitted by the Member.
+     
+     A.  SPECIFIC ABSOLUTE LIMITS CHECKS.
+     
+     Table 9.  The element-statistic-qualifier codes that were
+     subjected to extreme limits checks, and their lower and
+     upper limits.
+     ------------------------------------------------------------
+     element statistic                              lower  upper 
+       code     code   description                  limit  limit 
+     ------------------------------------------------------------
+       01    01,06,15  mean temperature             -34oC   40oC
+                       (see Note 9-1)
+       02    01,09,18  average maximum temperature  -40oC   50oC
+       02    04,11,26  extreme maximum temperature    0oC   60oC
+       03    01,10,19  average minimum temperature  -50oC   30oC
+                       (see Note 9-1)
+       03    05,13,20  extreme minimum temperature  -70oC   35oC
+       04    01,54,94  wet bulb temperature         -60oC   50oC
+       05    01,15,54, dew point temperature        -60oC   50oC
+             94
+     06,39   15        monthly total precipitation    0mm 3000mm
+       09    15        monthly total snowfall         0cm 1000cm
+       11    (any)     relative humidity               0%   100%
+       12    01,94     mean sea level pressure        990   1040
+                       (hPa)
+       13    01,69     mean station atmospheric       500   1040
+                       pressure (hPa)
+       14    01        mean vapor pressure (hPa)        0     40
+     15,40   44        mean daily sunshine duration     0     24
+                       (qualifier 06) (hrs)
+     15,40   44        mean monthly sunshine            0    744
+                       duration (hrs)
+       16    01        mean wind speed (m/sec)          0     10
+       17    30,41,42  prevailing wind direction        0    360
+       20    01        mean sky (cloud) cover           0      8
+                       (oktas)
+       45    (any)     frequency counts (see            0      -
+                       Note 9-2)
+     49-AJ,  15        monthly number of days with      0    28,
+     BH-BW              various weather elements           30,31
+                        (see Note 9-3)
+     54,95   02,15     monthly number of days with      0    28,
+                         rainfall/precipitation >=         30,31
+                         a threshold (see Note 9-3)
+       BT    15        monthly number of days with      0    28,
+                         rain (threshold not indicated)    30,31
+                         (see Note 9-3)
+     51,52,  03        standard deviation               0      2
+     53,58
+       20    03        standard deviation               0      3
+     01,02,  03,08     standard deviation               0      5
+     03,14,
+     19,21,
+     33
+       15    08        standard deviation               0      5
+     04,05,  03,60     standard deviation               0     10
+     11,12,
+     13,16,
+     54,95
+       08    03        standard deviation               0    130
+     15,40   03,17     standard deviation               0    200
+       06    03        standard deviation               0    250
+     (any)   12,14     year/day of occurrence of     BYR    EYR
+                       daily extreme (see Note 9-4)
+     (any)   21,27,55, year of occurrence of         BYR    EYR
+             56        monthly extreme (see Note 9-4
+                       for BYR & EYR definitions)
+     (any)   38-40     percent frequency              0%   100%
+     (any)   48,98     number of years of data         0   NYRS
+                       normals based on (see 
+                       Note 9-5)
+     ------------------------------------------------------------
+     Note 9-1:    For stations in Russia, Mongolia, and Antarctica,
+                  mean temperature lower limit was -50oC and
+                  average minimum temperature lower limit was 
+                  -60oC.
+     Note 9-2:    Upper limit not checked for frequency counts.
+     Note 9-3:    Upper limit was the maximum possible number of
+                  days in a month, the specific value depends on
+                  the month.
+     Note 9-4:    Lower limit is day 01 of the first year of the
+                  period which the extremes are based on (BYR,
+                  columns 18-21 of the data record); upper limit is
+                  the 29th, 30th, or 31st (depending on month of
+                  year) of the last year of the period which the
+                  extremes are based on (EYR, columns 22-25 of the
+                  data record).
+     Note 9-5:    Upper limit is the maximum number of years
+                  possible, NYRS=EYR-BYR+1 (see Note 9-4 for EYR &
+                  BYR definitions).
+     ------------------------------------------------------------
+     
+     
+     B.  SPECIFIC INTERNAL CONSISTENCY CHECKS BETWEEN ELEMENTS
+         AND STATISTICS.
+     
+     1.   Number of days with temperatures consistency check:
+     
+          (NDTmax >= Ti) greater than or equal to (NDTmax >= Ti+1)
+          (NDTmax <= Ti) less than or equal to (NDTmax <= Ti+1)
+          (NDTmin >= Ti) greater than or equal to (NDTmin >= Ti+1)
+          (NDTmin <= Ti) less than or equal to (NDTmin <= Ti+1)
+          (NDTmean >= Ti) greater than or equal to (NDTmean >=
+               Ti+1)
+          (NDTmean <= Ti) less than or equal to (NDTmean <= Ti+1)
+          (NDTmax > Ti) greater than or equal to (NDTmax > Ti+1)
+          (NDTmax < Ti) less than or equal to (NDTmax < Ti+1)
+          (NDTmin > Ti) greater than or equal to (NDTmin > Ti+1)
+          (NDTmin < Ti) less than or equal to (NDTmin < Ti+1)
+     
+           where
+     
+           NDTmax = number of days with maximum temperature,
+           NDTmin = number of days with minimum temperature,
+           NDTmean = number of days with mean temperature,
+           Ti = a temperature threshold value,
+           Ti+1 = a temperature threshold value > Ti.
+     
+     2.    Number of days with precipitation consistency check:
+     
+       (NDPrecip >= Xi) greater than or equal to (NDPrecip >=
+            Xi+1)
+       (NDRain >= Xi) greater than or equal to (NDRain >= Xi+1)
+       (NDSF >= Xi) greater than or equal to (NDSF >= Xi+1)
+       (NDSC >= Xi) greater than or equal to (NDSC >= Xi+1)
+     
+       where     NDPrecip = number of days with precipitation,
+                 NDRain = number of days with rain,
+                 NDSF = number of days with snowfall,
+                 NDSC = number of days with snow cover,
+                 Xi  = a precipitation, rainfall, snowfall, or
+                       snow cover threshold value,
+                 Xi+1 = a precipitation, rainfall, snowfall, or
+                        snow cover threshold value > Xi.
+     
+     3.    Temperature consistency check:
+     
+       For a given temperature element,
+     
+       (lowest {minimum} value) less than or equal to (mean
+            value)
+       (mean value) less than or equal to (highest {maximum}
+            value)
+     
+     4.    Cross-element temperature consistency check:
+     
+       (extreme {coldest} minimum temperature) less than
+                 (normal {average} minimum temperature)
+       (normal {average} minimum temperature) less than
+                 (normal {average} mean temperature)
+       (normal {average} mean temperature) less than
+                 (normal {average} maximum temperature)
+       (normal {average} maximum temperature) less than
+                 (extreme {warmest} maximum temperature)
+     
+     5.    Precipitation quintiles consistency check:
+     
+       0 <= Min <= Q1 <= Q2 <= Q3 <= Q4 <= Max
+     
+       where
+     
+           Min = smallest monthly precipitation value,
+           Q1 = first (20%) monthly precipitation quintile,
+           Q2 = second (40%) monthly precipitation quintile,
+           Q3 = third (60%) monthly precipitation quintile,
+           Q4 = fourth (80%) monthly precipitation quintile,
+           Max = largest monthly precipitation value.
+     
+     6.    Atmospheric pressure consistency check:
+     
+       (mean sea level pressure) greater than or equal to
+                 (mean station pressure)
+     
+       Note:  If a station's elevation is below sea level,
+              then the station should be expected to fail this
+              consistency check.
+     
+     7.    Monthly amount/number of days consistency check:
+     
+       If Precip = 0, then NDPrecip should = 0.
+       If NDPrecip = 0, then Precip should = 0.
+       If SF = 0, then NDSF should = 0.
+       If NDSF = 0, then SF should = 0.
+     
+       where     Precip = total monthly precipitation amount,
+                 SF = total monthly snowfall amount,
+                 NDPrecip = number of days with precipitation,
+                 NDSF = number of days with snowfall.
+     
+     8.    Precipitation amount consistency check:
+     
+       Psmall <= (normal total precipitation) <= Plarge
+     
+       where     Psmall = smallest monthly precipitation amount,
+                 Plarge = largest monthly precipitation amount.
+     
+     
+     C.  SPECIFIC ELEMENTS COMPARED TO THE WORLD WEATHER RECORDS
+         (WWR) 1971-1980 MEANS.
+     
+     The 1961-1990 normals were compared to the WWR 1971-1980
+     means for those stations and elements that were available in
+     both data sets.  Two types of comparisons were made:
+     
+     1.    For mean temperature, station pressure, and sea level
+           pressure, differences between the 1961-1990 normals and
+           their corresponding WWR means were computed for all 12
+           months and the annual value.  If the difference was
+           greater than a specified threshold (a threshold was
+           chosen to account for the fact that a 30-year mean was
+           being compared to a 10-year mean), the value was
+           flagged as failing the test.  The magnitude of the
+           thresholds were:
+     
+           mean temperature    2.0 oC
+           station pressure    3.0 hPa
+           sea level pressure  3.0 hPa
+     
+     2.    For monthly and annual total precipitation amount, the
+           ratio between the 1971-1980 WWR means and the 1961-1990
+           normals was computed.  If the ratio was significantly
+           different from 1.0 (i.e., outside the range 0.6 to
+           1.4), the value was flagged as failing the test.  (A
+           range was chosen to account for the fact that a 30-year
+           mean was being compared to a 10-year mean.)  The
+           following specific patterns were also checked for:  (i)
+           the ratio was approximately 10.0 or 0.1 (indicating a
+           decimal placement error); (ii) the ratio was
+           approximately 25.4 (indicating an English-Metric units
+           difference); and (iii) the ratio was approximately 2.54
+           (indicating a combination of i and ii).  For these
+           three pattern checks, the value was flagged as failing
+           the test if the ratio fell within a specified range. 
+           The ranges for these pattern tests were determined by
+           manually examining a subset of the data and consisted
+           of:
+     
+           (i) decimal placement error         0.07 - 0.13 and
+                                               7.0  - 13.0
+           (ii) English-Metric units error     18.0 - 30.0
+           (iii) combination (i) and (ii)      1.8  - 3.00
+     
+       Precipitation values near 0.0 result in unreliable or
+       unrepresentative ratios.  Consequently, no
+       precipitation comparison was made if both the 10-year
+       and 30-year means were less than or equal to 5.0 mm.
+     
+     
+     D.  INTERNAL CONSISTENCY CHECK BETWEEN THE ANNUAL VALUE AND
+         THE MONTHLY VALUES.
+     
+     The annual value provided by the Member (designated here as
+     ANNMEM) was compared to the annual value computed by the
+     NCDC from the monthly values provided by the Member
+     (designated here as ANNCOMP).  If the two annual values
+     differed by an amount greater than 0.05, then the ANNMEM
+     value was flagged as failing this test.  Both annual values
+     were saved in the digital data base.
+     
+     Differences between ANNMEM and ANNCOMP could result from
+     differences in rounding methodologies or differences in how
+     the annual value was computed (i.e., an annual normal
+     computed from the monthly normal values versus an annual
+     normal computed by averaging the individual annual values
+     from each year of the normals period).  A value for ANNCOMP
+     was computed only if all 12 months were non-missing and were
+     not a trace value.  The ANNCOMP value is the sum of the
+     monthly normal values for the following elements:
+     
+       total precipitation amount
+       snowfall amount
+       sunshine duration
+       evaporation
+       total rainfall amount
+       number of days
+     
+     The ANNCOMP value is the average of the monthly normal
+     values for the following elements:
+     
+       temperature
+       relative humidity
+       atmospheric pressure
+       vapor pressure
+       wind speed
+       sky (cloud) cover
+     
+--end of file--
+
