@@ -1,19 +1,39 @@
 #!/usr/bin/env python3
 ## Imports WMO data to an SQLite3 database
-## WMO data comes from http://webapp1.dlib.indiana.edu/virtual_disk_library/index.cgi/4296047/FID427/DATA/ALLNORMS.DAT
+## WMO data comes from http://webapp1.dlib.indiana.edu/virtual_disk_library/index.cgi/4296047/FID427/
 ## By Jon Dehdari, 2016
-## Usage: python3 wmo_norms_db.py ALLNORMS.DAT STN_META.TXT
+## Usage: python3 wmo_norms_db.py
+## Then:  sqlite3 wmo_norms.db
 ## An example website that uses this data is www.climate-charts.com
 
 import sqlite3 as lite
-import sys, codecs
+import os, sys, argparse, lzma, codecs
+
+parser = argparse.ArgumentParser(description='Builds weather database')
+
+parser.add_argument('--allnorms', help='Specify allnorms.dat input (default: %(default)s)', type=str, default='wmo_norms_1961-1990/data/allnorms.dat.utf8.xz')
+parser.add_argument('--stnmeta', help='Specify stnmeta.dat input (default: %(default)s)', type=str, default='wmo_norms_1961-1990/data/stnmeta.dat.utf8.xz')
+parser.add_argument('--db', help='Specify Sqlite3 database output (default: %(default)s)', type=str, default='wmo_norms.db')
+args = parser.parse_args()
+
+_, allnorms_suffix = os.path.splitext(args.allnorms)
+if allnorms_suffix == '.xz':
+    allnorms_file = lzma.open(args.allnorms, mode='rt', encoding='utf-8')
+else:
+    allnorms_file = codecs.open(args.allnorms, 'r', 'iso-8859-1') # original file is iso-8859
+
+_, stnmeta_suffix  = os.path.splitext(args.stnmeta)
+if stnmeta_suffix == '.xz':
+    stnmeta_file = lzma.open(args.stnmeta, mode='rt', encoding='utf-8')
+else:
+    stnmeta_file = codecs.open(args.stnmeta, 'r', 'iso-8859-1') # original file is iso-8859
+
 
 # Weather data
-# File: wmo_norms/data/ALLNORMS.DAT
-# Docs: wmo_norms/data/ALLNORMS.TXT
-input_file = codecs.open(sys.argv[1], 'r', 'iso-8859-1')
+# File: wmo_norms/data/allnorms.dat.utf8.xz
+# Docs: wmo_norms/doc/allnorms.txt
 data = []
-for line in input_file:
+for line in allnorms_file:
     region         = line[0]
     country        = line[1:3].strip()
     station        = line[3:16].strip()
@@ -34,15 +54,14 @@ for line in input_file:
     annual_norms_reported = line[133:141].strip()
     annual_norms_computed = line[142:150].strip()
     data.append((region, country, station, clim_elem_code, statistic_code, jan, feb, mar, apr, may, jun, jul, aug, sep, octr, nov, dec, annual_norms_reported, annual_norms_computed))
-input_file.close()
+allnorms_file.close()
 
 
 # Station metadata
-# File: wmo_norms/data/STNMETA.DAT
-# Docs: wmo_norms/document/STN_META.TXT
-input_file = codecs.open(sys.argv[2], 'r', 'iso-8859-1')
+# File: wmo_norms/data/stnmeta.dat.utf.xz
+# Docs: wmo_norms/doc/stnmeta.txt
 station_meta = []
-for line in input_file:
+for line in stnmeta_file:
     region       = line[0]
     country      = line[1:3].strip()
     station      = line[3:16].strip()
@@ -63,7 +82,7 @@ for line in input_file:
     name         = line[136:158].strip()
     country_name = line[158:208].title().strip()
     station_meta.append((region, country, station, lat_degs_mem, lat_mins_mem, lat_hem_mem, lon_degs_mem, lon_mins_mem, lon_hem_mem, elev_mem, lat_degs_wmo, lat_mins_wmo, lat_hem_wmo, lon_degs_wmo, lon_mins_wmo, lon_hem_wmo, elev_wmo, name, country_name))
-input_file.close()
+stnmeta_file.close()
 
 
 # Table 1 of wmo_norms/data/ALLNORMS.TXT
@@ -251,7 +270,7 @@ statistic_code = [
 
 
 
-con = lite.connect('wmo_norms.db')
+con = lite.connect(args.db)
 
 with con:
     cur = con.cursor()
@@ -339,3 +358,6 @@ CREATE TABLE `statistic_code` (
 );
 """)
     cur.executemany("INSERT INTO `statistic_code` VALUES(?,?)", statistic_code)
+
+
+    cur.execute("VACUUM;")
