@@ -60,3 +60,9 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+# SQLite Database
+*.db
+
+# Vim files
+.*.sw[pn]

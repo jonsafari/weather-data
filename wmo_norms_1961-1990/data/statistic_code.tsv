@@ -1,0 +1,73 @@
+01	Mean Value
+02	Median Value
+03	Standard Deviation of Mean Value
+04	Maximum Value
+05	Minimum Value
+06	Mean Daily Value
+08	Standard Deviation of Mean Daily Value
+09	Mean Daily Maximum Value
+10	Mean Daily Minimum Value
+11	Maximum Daily Value
+12	Date (Year/Day) of Occurrence of Maximum Daily Value
+13	Minimum Daily Value
+14	Date (Year/Day) of Occurrence of Minimum Daily Value
+15	Mean Monthly Value
+16	Standard Deviation of Mean Monthly Value
+18	Mean Monthly Maximum Value
+19	Mean Monthly Minimum Value
+20	Minimum Monthly Value
+21	Year of Occurrence of Minimum Monthly Value
+22	First Quintile
+23	Second Quintile
+24	Third Quintile
+25	Fourth Quintile
+26	Maximum Monthly Value
+27	Year of Occurrence of Maximum Monthly Value
+30	Maximum Gust 
+37	Percent of Possible
+38	Frequency
+41	Prevailing
+42	Vector
+44	Mean Number of Hours
+45	Mean - Sunrise to Sunset
+51	Mean on Last Day of Month
+53	Percent of Daylight Hours
+55	Year of Occurrence of Maximum Value
+56	Year of Occurrence of Minimum Value
+57	Mean Percent
+58	First Quartile
+59	Third Quartile
+60	Standard Deviation of 3-Hourly Values
+64	Total Count for Period of Record
+69	Mean of Hourly Observations
+70	Mean of Observations at 0000 LST
+71	Mean of Observations at 0100 LST
+72	Mean of Observations at 0200 LST
+73	Mean of Observations at 0300 LST
+74	Mean of Observations at 0400 LST
+75	Mean of Observations at 0500 LST
+76	Mean of Observations at 0600 LST
+77	Mean of Observations at 0700 LST
+78	Mean of Observations at 0800 LST
+79	Mean of Observations at 0900 LST
+80	Mean of Observations at 1000 LST
+81	Mean of Observations at 1100 LST
+82	Mean of Observations at 1200 LST
+83	Mean of Observations at 1300 LST
+84	Mean of Observations at 1400 LST
+85	Mean of Observations at 1500 LST
+86	Mean of Observations at 1600 LST
+87	Mean of Observations at 1700 LST
+88	Mean of Observations at 1800 LST
+89	Mean of Observations at 1900 LST
+90	Mean of Observations at 2000 LST
+91	Mean of Observations at 2100 LST
+92	Mean of Observations at 2200 LST
+93	Mean of Observations at 2300 LST
+94	Mean of 3-Hourly Observations
+97	Mean of Synoptic Observations
+98	Number of Years used to Calculate Normal
+AF	Afternoon Average
+AM	Daytime Average
+MO	Morning Average
+PM	Nighttime Average

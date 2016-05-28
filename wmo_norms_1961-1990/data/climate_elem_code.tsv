@@ -1,0 +1,86 @@
+01	deg C	Dry Bulb Temperature
+02	deg C	Maximum Dry Bulb Temperature
+03	deg C	Minimum Dry Bulb Temperature
+04	deg C	Wet Bulb Temperature
+05	deg C	Dew Point Temperature
+06	mm	Precipitation
+08	mm	Maximum 24-Hour Precipitation
+09	cm	Snowfall
+10	cm	Snow Depth
+11	%	Relative Humidity
+12	hPa	Sea Level Pressure
+13	hPa	Station Pressure
+14	hPa	Vapor Pressure
+15	*	Sunshine
+16	m/sec	Wind Speed
+17	degrees	Wind Direction
+18	unitless	Wind Steadiness
+19	deg C	Soil Temperature
+20	okta	Sky Cover (Cloud Cover)
+21	mm	Pan Evaporation
+28	m	Height of 1000 hPa Geopotential Level
+29	m	Height of 850 hPa Geopotential Level
+30	m	Height of 700 hPa Geopotential level
+32	MJ/m2	Net Solar Radiation
+33	MJ/m2	Global Solar Radiation
+34	MJ/m2	Diffuse Solar Radiation
+35	MJ/m2	Reflected Solar Radiation
+36	MJ/m2	Atmospheric Solar Radiation
+37	MJ/m2	Terrestrial Solar Radiation
+38	mm	Piche Evaporation
+39	mm	Rainfall
+40	*	Bright Sunshine
+48	*	Calm Winds
+49	count	Number Days with Sandstorm/Thick Dust/Haze
+50	count	Number Days with Measurable Bright Sunshine
+51	count	Number Days with Thunder
+52	count	Number Days with Lightning
+53	count	Number Days with Hail
+54	count	Number Days with Rainfall GE Threshold
+55	count	Number Days with Rain Showers
+56	count	Number Days with Snowfall
+57	count	Number Days with Snow on Ground
+58	count	Number Days with Fog/Ice Fog
+59	count	Number Days with Fog - Sky Obscured
+60	count	Number Days with Fog - Sky Unobscured
+61	count	Number Days with Haze/Smoke
+62	count	Number Days with Dust
+63	count	Number Days with Blowing Dust/Sand
+65	count	Number Days with Visibility LE Threshold
+73	count	Number Days with no Sunshine
+74	count	Number Days with Dew
+75	count	Number Days with Rime/Glaze Ice
+76	count	Number Days with Air Frost
+77	count	Number Days with Grass Frost
+82	count	Number Days with Gale Force Winds
+83	count	Number Days Maximum Temperature GE Threshold
+84	count	Number Days Maximum Temperature LE Threshold
+85	count	Number Days Minimum Temperature LE Threshold
+86	count	Number Days Minimum Temperature GE Threshold
+87	count	Number Days Mean Temperature GE Threshold
+89	count	Number Days with Dust/Haze/Mist
+90	count	Number Days Maximum Temperature GT Threshold
+91	count	Number Days Maximum Temperature LT Threshold
+92	count	Number Days Minimum Temperature GT Threshold
+93	count	Number Days Minimum Temperature LT Threshold
+94	count	Number Days with Snowfall GE Threshold
+95	count	Number Days with Precipitation GE Threshold
+96	count	Number Days with Snow Cover GE Threshold
+97	count	Number Days with Freezing Rain/Drizzle
+98	count	Number Days with Blowing Snow
+AA	count	Number Days with Rain/Drizzle
+AB	count	Number Days with Snow/Hail
+AC	count	Number Days with Fog/Mist
+AD	count	Number Days with Weather Phenomena
+AE	count	Number Days with Ice Storm
+AF	count	Number Days with Thick Haze
+AG	count	Number Days with Rising Sand
+AH	count	Number Days with Mist
+AI	count	Number Days with Squalls
+AJ	count	Number Days with Duststorm/Sandstorm
+AK	count	Number Days with Sleet/Snow
+BH	count	Number Days Mean Temperature LT Threshold
+BJ	count	Number Days with Fog
+BM	count	Number Days with Daily Maximum Wind Speed GE Threshold
+BT	count	Number Days with Occurrence of Rain
+BW	count	Number Days with Daily Maximum Snow Cover GE Threshold
