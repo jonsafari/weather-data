@@ -12,33 +12,27 @@ import sqlite3 as lite
 import os, sys, argparse, lzma, codecs
 
 
-data = []
-station_meta = []
-clim_elem_codes = []
-region_codes = []
-statistic_codes = []
-
-def open_files(args):
+def open_files(args, data):
     # Read climate element codes
     # Table 6 of wmo_norms/data/ALLNORMS.TXT
     # Code, Unit, Description
     with open(args.climate_elem_codes) as clim_elem_codes_file:
         for line in clim_elem_codes_file:
-            clim_elem_codes.append(tuple(line.rstrip().split('\t')))
+            data['clim_elem_codes'].append(tuple(line.rstrip().split('\t')))
 
     # Read region codes
     # Table 1 of wmo_norms/data/ALLNORMS.TXT
     # Code, Region
     with open(args.region_codes) as region_codes_file:
         for line in region_codes_file:
-            region_codes.append(tuple(line.rstrip().split('\t')))
+            data['region_codes'].append(tuple(line.rstrip().split('\t')))
 
     # Read statistic codes
     # Table 7 of wmo_norms/data/ALLNORMS.TXT
     # Code, Description
     with open(args.stat_codes) as statistic_codes_file:
         for line in statistic_codes_file:
-            statistic_codes.append(tuple(line.rstrip().split('\t')))
+            data['statistic_codes'].append(tuple(line.rstrip().split('\t')))
 
 
     # Main weather data (allnorms)
@@ -69,7 +63,7 @@ def open_files(args):
         dec  = line[125:132].strip()
         annual_norms_reported = line[133:141].strip()
         annual_norms_computed = line[142:150].strip()
-        data.append((region, country, station, clim_elem_code, statistic_code, jan, feb, mar, apr, may, jun, jul, aug, sep, octr, nov, dec, annual_norms_reported, annual_norms_computed))
+        data['allnorms'].append((region, country, station, clim_elem_code, statistic_code, jan, feb, mar, apr, may, jun, jul, aug, sep, octr, nov, dec, annual_norms_reported, annual_norms_computed))
     allnorms_file.close()
 
 
@@ -101,13 +95,13 @@ def open_files(args):
         elev_wmo     = line[46:50].strip()
         name         = line[136:158].strip()
         country_name = line[158:208].title().strip()
-        station_meta.append((region, country, station, lat_degs_mem, lat_mins_mem, lat_hem_mem, lon_degs_mem, lon_mins_mem, lon_hem_mem, elev_mem, lat_degs_wmo, lat_mins_wmo, lat_hem_wmo, lon_degs_wmo, lon_mins_wmo, lon_hem_wmo, elev_wmo, name, country_name))
+        data['station_meta'].append((region, country, station, lat_degs_mem, lat_mins_mem, lat_hem_mem, lon_degs_mem, lon_mins_mem, lon_hem_mem, elev_mem, lat_degs_wmo, lat_mins_wmo, lat_hem_wmo, lon_degs_wmo, lon_mins_wmo, lon_hem_wmo, elev_wmo, name, country_name))
     stnmeta_file.close()
 
 
 
 
-def gen_db(args):
+def gen_db(args, data):
     con = lite.connect(args.db)
     with con:
         cur = con.cursor()
@@ -135,7 +129,7 @@ def gen_db(args):
         `annual_norms_computed`     REAL NOT NULL
     );
     """)
-        cur.executemany("INSERT INTO `allnorms` VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", data)
+        cur.executemany("INSERT INTO `allnorms` VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", data['allnorms'])
 
         cur.execute("DROP TABLE IF EXISTS `station_meta`")
         cur.execute("""
@@ -161,7 +155,7 @@ def gen_db(args):
         `country_name` TEXT NOT NULL
     );
     """)
-        cur.executemany("INSERT INTO `station_meta` VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", station_meta)
+        cur.executemany("INSERT INTO `station_meta` VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", data['station_meta'])
 
         cur.execute("DROP TABLE IF EXISTS `region_codes`")
         cur.execute("""
@@ -170,7 +164,7 @@ def gen_db(args):
         `region` TEXT NOT NULL
     );
     """)
-        cur.executemany("INSERT INTO `region_codes` VALUES(?,?)", region_codes)
+        cur.executemany("INSERT INTO `region_codes` VALUES(?,?)", data['region_codes'])
 
         cur.execute("DROP TABLE IF EXISTS `clim_elem_codes`")
         cur.execute("""
@@ -180,7 +174,7 @@ def gen_db(args):
         `desc`   TEXT NOT NULL
     );
     """)
-        cur.executemany("INSERT INTO `clim_elem_codes` VALUES(?,?,?)", clim_elem_codes)
+        cur.executemany("INSERT INTO `clim_elem_codes` VALUES(?,?,?)", data['clim_elem_codes'])
 
         cur.execute("DROP TABLE IF EXISTS `statistic_codes`")
         cur.execute("""
@@ -189,7 +183,7 @@ def gen_db(args):
         `desc`   TEXT NOT NULL
     );
     """)
-        cur.executemany("INSERT INTO `statistic_codes` VALUES(?,?)", statistic_codes)
+        cur.executemany("INSERT INTO `statistic_codes` VALUES(?,?)", data['statistic_codes'])
 
         cur.execute("VACUUM;")
 
@@ -204,8 +198,10 @@ def main():
     parser.add_argument('--stat_codes', help='Specify statistic_code.tsv (default: %(default)s)', type=str, default='wmo_norms_1961-1990/data/statistic_code.tsv')
     args = parser.parse_args()
 
-    open_files(args)
-    gen_db(args)
+    data = {'allnorms':[], 'station_meta': [], 'clim_elem_codes':[], 'region_codes':[], 'statistic_codes':[]}
+
+    open_files(args, data)
+    gen_db(args, data)
 
 
 if __name__ == '__main__':
