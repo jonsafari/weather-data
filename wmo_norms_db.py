@@ -205,6 +205,7 @@ def main():
     args = parser.parse_args()
 
     open_files(args)
+    gen_db(args)
 
 
 if __name__ == '__main__':
