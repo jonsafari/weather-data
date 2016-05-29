@@ -9,7 +9,7 @@ An example website that uses this data is www.climate-charts.com
 """
 
 import sqlite3 as lite
-import os, sys, argparse, lzma, codecs
+import os, sys, argparse, re, lzma, codecs
 
 
 def open_files(args, data):
@@ -32,7 +32,9 @@ def open_files(args, data):
     # Code, Description
     with open(args.stat_codes) as statistic_codes_file:
         for line in statistic_codes_file:
-            data['statistic_codes'].append(tuple(line.rstrip().split('\t')))
+            (code, desc) = line.rstrip().split('\t')
+            desc_short = re.sub('_+value', '', re.sub('\s+', '_', desc.lower())) # Eg. "Mean Daily Value" -> "mean_daily"
+            data['statistic_codes'].append((code, desc_short, desc))
 
 
     # Main weather data (allnorms)
@@ -99,6 +101,18 @@ def open_files(args, data):
     stnmeta_file.close()
 
 
+def split_allnorms(data):
+    """
+    Normalizes statistic_codes column of allnorms data to 5NF
+    """
+
+    # Initialize stat_codes dictionary
+    statistic_codes = {}
+    for code in data['statistic_codes']:
+        statistic_codes[code] = []
+
+    for line in data['allnorms']:
+        print(line[4])
 
 
 def gen_db(args, data):
@@ -179,11 +193,12 @@ def gen_db(args, data):
         cur.execute("DROP TABLE IF EXISTS `statistic_codes`")
         cur.execute("""
     CREATE TABLE `statistic_codes` (
-        `code`   TEXT PRIMARY KEY,
-        `desc`   TEXT NOT NULL
+        `code`       TEXT PRIMARY KEY,
+        `desc_short` TEXT NOT NULL,
+        `desc`       TEXT NOT NULL
     );
     """)
-        cur.executemany("INSERT INTO `statistic_codes` VALUES(?,?)", data['statistic_codes'])
+        cur.executemany("INSERT INTO `statistic_codes` VALUES(?,?,?)", data['statistic_codes'])
 
         cur.execute("VACUUM;")
 
@@ -201,6 +216,7 @@ def main():
     data = {'allnorms':[], 'station_meta': [], 'clim_elem_codes':[], 'region_codes':[], 'statistic_codes':[]}
 
     open_files(args, data)
+    #split_allnorms(data) # normalizes statistic_codes column of allnorms data to 5NF
     gen_db(args, data)
 
 
