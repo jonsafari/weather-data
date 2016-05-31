@@ -1,4 +1,7 @@
 .echo ON
+.headers ON
+.mode column
+.width 14 25 13 9 9 9 9 9
 
 -- -- Listing of Germany annual sunshine hours
 -- select an_sun.station, station_meta.name, station_meta.country_name, region_codes.region, an_sun.annual_norms_computed
@@ -33,15 +36,15 @@ order by an_sun.dec desc;
 select an_sun.station,
 	station_meta.name,
 	station_meta.country_name,
-	region_codes.region,
-	an_sun.dec,
-	an_low.jan,
-	an_hi.jul,
+	--region_codes.region,
+	an_sun.dec as "sun_dec",
+	an_low.jan as "low_jan",
+	an_hi.jul  as "hi_july",
 	an_hi.jul - an_low.jan as "temp_range",
-	an_hum.jul
+	an_hum.jul as "hum_july"
 from allnorms an_sun
 join station_meta on an_sun.station = station_meta.station
-join region_codes on region_codes.code = an_sun.region
+--join region_codes on region_codes.code = an_sun.region
 join allnorms an_low on an_low.station = an_sun.station
 join allnorms an_hi  on an_hi.station = an_sun.station
 join allnorms an_hum on an_hum.station = an_sun.station
