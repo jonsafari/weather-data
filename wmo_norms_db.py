@@ -33,8 +33,10 @@ def open_files(args, data):
     with open(args.stat_codes) as statistic_codes_file:
         for line in statistic_codes_file:
             (code, desc) = line.rstrip().split('\t')
-            desc_short = re.sub('_+value', '', re.sub('\s+', '_', desc.lower())) # Eg. "Mean Daily Value" -> "mean_daily"
+            desc_short = 'stats_' + re.sub('_+value', '', re.sub('\s+', '_', desc.lower())) # Eg. "Mean Daily Value" -> "mean_daily"
             data['statistic_codes'].append((code, desc_short, desc))
+            data['stats_codes_dict'][code] = desc_short
+            data[desc_short] = []
 
 
     # Main weather data (allnorms)
@@ -106,44 +108,44 @@ def split_allnorms(data):
     Normalizes statistic_codes column of allnorms data to 5NF
     """
 
-    # Initialize stat_codes dictionary
-    statistic_codes = {}
-    for code in data['statistic_codes']:
-        statistic_codes[code] = []
-
     for line in data['allnorms']:
-        print(line[4])
+        readable_name = data['stats_codes_dict'][line[4]] + "_" + data['clim_elem_codes_dict'][line[3]] # Fourth column of allnorms is climate_elem_code.  Fifth column of allnorms is statistic_code
+        data[readable_name].append(line)
+
+    del(data['allnorms'])
 
 
 def gen_db(args, data):
     con = lite.connect(args.db)
     with con:
         cur = con.cursor()
-        cur.execute("DROP TABLE IF EXISTS `allnorms`")
-        cur.execute("""
-    CREATE TABLE `allnorms` (
-        `region`         INTEGER NOT NULL,
-        `country`        TEXT NOT NULL,
-        `station`        TEXT NOT NULL,
-        `clim_elem_code` TEXT NOT NULL,
-        `statistic_code` TEXT,
-        `jan`            REAL,
-        `feb`            REAL,
-        `mar`            REAL,
-        `apr`            REAL,
-        `may`            REAL,
-        `jun`            REAL,
-        `jul`            REAL,
-        `aug`            REAL,
-        `sep`            REAL,
-        `oct`            REAL,
-        `nov`            REAL,
-        `dec`            REAL,
-        `annual_norms_reported`     REAL,
-        `annual_norms_computed`     REAL NOT NULL
+
+        for (code, desc_short, _) in data['statistic_codes']:
+            cur.execute("DROP TABLE IF EXISTS `" + desc_short + "`")
+            cur.execute("CREATE TABLE `" + desc_short + "` (" +
+    """
+            `region`         INTEGER NOT NULL,
+            `country`        TEXT NOT NULL,
+            `station`        TEXT NOT NULL,
+            `clim_elem_code` TEXT NOT NULL,
+            `statistic_code` TEXT,
+            `jan`            REAL,
+            `feb`            REAL,
+            `mar`            REAL,
+            `apr`            REAL,
+            `may`            REAL,
+            `jun`            REAL,
+            `jul`            REAL,
+            `aug`            REAL,
+            `sep`            REAL,
+            `oct`            REAL,
+            `nov`            REAL,
+            `dec`            REAL,
+            `annual_norms_reported`     REAL,
+            `annual_norms_computed`     REAL NOT NULL
     );
     """)
-        cur.executemany("INSERT INTO `allnorms` VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", data['allnorms'])
+            cur.executemany("INSERT INTO `" + desc_short + "` VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", data[desc_short])
 
         cur.execute("DROP TABLE IF EXISTS `station_meta`")
         cur.execute("""
@@ -213,10 +215,10 @@ def main():
     parser.add_argument('--stat_codes', help='Specify statistic_code.tsv (default: %(default)s)', type=str, default='wmo_norms_1961-1990/data/statistic_code.tsv')
     args = parser.parse_args()
 
-    data = {'allnorms':[], 'station_meta': [], 'clim_elem_codes':[], 'region_codes':[], 'statistic_codes':[]}
+    data = {'allnorms':[], 'station_meta': [], 'clim_elem_codes':[], 'region_codes':[], 'statistic_codes':[], 'stats_codes_dict': {}}
 
     open_files(args, data)
-    #split_allnorms(data) # normalizes statistic_codes column of allnorms data to 5NF
+    split_allnorms(data) # normalizes statistic_codes column of allnorms data to 5NF
     gen_db(args, data)
 
 
