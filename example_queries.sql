@@ -53,6 +53,7 @@ where station_meta.country_name = 'United States Of America'
 	and an_sun.statistic_code = '44'
 	and an_low.clim_elem_code = '03' -- mean low temp (in january)
 	and an_low.statistic_code = '01'
+	and an_low.jan > -10             -- no cold places
 	and an_hi.clim_elem_code  = '02' -- mean hi temp (in july)
 	and an_hi.statistic_code  = '01'
 	and an_hum.clim_elem_code = '11' -- mean humidity (in july)
