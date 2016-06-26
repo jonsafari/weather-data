@@ -1,7 +1,7 @@
 # Weather-data
 Worldwide weather data.  Thirty years of it.
 
-Data and scripts are provided to build an SQL database of 30 years of weather info.
+Data and scripts are provided to build an SQL database of 30 years of international weather info.
 
 ## Building the SQLite Database
 To build the SQLite3 database, run the following:
