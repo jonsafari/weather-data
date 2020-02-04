@@ -8,8 +8,13 @@ Then:  sqlite3 wmo_norms.db
 An example website that uses this data is www.climate-charts.com
 """
 
+import os
+import sys
+import argparse
+import re
+import lzma
+import codecs
 import sqlite3 as lite
-import os, sys, argparse, re, lzma, codecs
 
 
 def open_files(args, data):
@@ -116,7 +121,7 @@ def split_allnorms(data):
 
 
 def gen_db(args, data):
-    con = lite.connect(args.db)
+    con = lite.connect(args.db, isolation_level=None)
     with con:
         cur = con.cursor()
         cur.execute("DROP TABLE IF EXISTS `allnorms`")
